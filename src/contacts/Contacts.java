@@ -55,7 +55,7 @@ public class Contacts {
                 System.out.println("Ok, please enter the name of your contact: ");
                 String contactName = input.getString();
                 System.out.println("Please enter the contact's number: ");
-                int contactNumber = input.getInt();
+                String contactNumber = input.getString();
 
                 String contact = (contactName + ", " + contactNumber);
                 List<String> addContact = Arrays.asList(contact);
@@ -67,7 +67,21 @@ public class Contacts {
                 System.out.println("Contact has been added!");
                 break;
             case 3:
+                // WE NEED TO SPLIT THE CONTACT INTO A STRING ARRAY
+
                 System.out.println("Search a contact by name");
+                System.out.println("Ok, what is the name of the contact you would like to see? ");
+                String whichOne = input.getString();
+                try {
+                    for (String string : fh.retrievingContacts()) {
+                        String[] contactParts = string.split(",");
+                        if (contactParts[0].equalsIgnoreCase(whichOne)) {
+                            System.out.println(contactParts[0] + " | " + contactParts[1]);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 4:
                 System.out.println("Delete an existing contact");
