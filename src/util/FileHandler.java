@@ -40,9 +40,9 @@ public class FileHandler {
         return contents;
     }
 
-    public void writingContacts() throws IOException {
+    public void writingContacts(List<String> addContact) throws IOException {
         Path path = Paths.get(this.directory, this.filename);
-        Files.write(path, this.contents, StandardOpenOption.APPEND);
+        Files.write(path, addContact, StandardOpenOption.APPEND);
     }
 
 }

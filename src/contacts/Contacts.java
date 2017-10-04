@@ -3,7 +3,10 @@ package contacts;
 import util.FileHandler;
 
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
+
+import util.Input;
 
 public class Contacts {
 
@@ -32,23 +35,36 @@ public class Contacts {
     }
 
     public static void userOption() {
-        Scanner scanner = new Scanner(System.in);
-        int userInput = scanner.nextInt();
+        Input input = new Input();
+        int userInput = input.getInt();
+//        scanner.nextLine();
+//        System.out.println();
 
         switch (userInput) {
             case 1:
 //                were iterating through our list(list is pulled from fh.retrievingContacts) and printing each individual list object
                 try {
-                    for (String string:fh.retrievingContacts())
-                    {
+                    for (String string : fh.retrievingContacts()) {
                         System.out.println(string);
                     }
-                } catch (IOException ioe){
+                } catch (IOException ioe) {
                     ioe.printStackTrace();
                 }
                 break;
             case 2:
-                System.out.println("Add new contact");
+                System.out.println("Ok, please enter the name of your contact: ");
+                String contactName = input.getString();
+                System.out.println("Please enter the contact's number: ");
+                int contactNumber = input.getInt();
+
+                String contact = (contactName + ", " + contactNumber);
+                List<String> addContact = Arrays.asList(contact);
+                try {
+                    fh.writingContacts(addContact);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Contact has been added!");
                 break;
             case 3:
                 System.out.println("Search a contact by name");
