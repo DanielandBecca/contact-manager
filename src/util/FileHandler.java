@@ -1,7 +1,5 @@
 package util;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,22 +7,21 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class FileHandler {
+
     private String directory;
     private String filename;
+    private List<String> contents;
 
-    public static void main(String[] args) {
-        printMenu();
-        grabContents();
+   public FileHandler (String directory, String filename) {
+       this.directory = directory;
+       this.filename = filename;
+       this.contents = new ArrayList<>();
+   }
 
-
-
-
-    }
     public void createFile() throws IOException {
-        Path files = Paths.get(filename);
+        Path files = Paths.get(this.directory, this.filename);
         if (!Files.exists(files)) {
             Files.createFile(files);
         }
@@ -37,22 +34,15 @@ public class FileHandler {
         }
     }
 
-    public static void grabContents() throws IOException {
-        List<String> contents = new ArrayList<>();
-        Path path = Paths.get("contacts", "contacts.txt");
-        Files.write(path, contents, StandardOpenOption.APPEND);
+    public List<String> retrievingContents() throws IOException {
+        Path path = Paths.get(this.directory, this.filename);
+        this.contents = Files.readAllLines(path);
+        return contents;
     }
 
-    public static void printMenu(){
-    Scanner scanner = new Scanner(System.in);
-        System.out.println("1. View Contacts");
-        System.out.println("2. Add new contact");
-        System.out.println("3. Search a contact by name");
-        System.out.println("4. Delete an existing contact");
-        System.out.println("5. Exit");
-        System.out.println("Enter an option(1, 2, 3, 4, 5): ");
-        String userInput = scanner.nextLine();
-        System.out.println(userInput);
+    public void writingContents() throws IOException {
+        Path path = Paths.get(this.directory, this.filename);
+        Files.write(path, this.contents, StandardOpenOption.APPEND);
     }
 
 }
