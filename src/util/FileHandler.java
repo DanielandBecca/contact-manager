@@ -34,15 +34,15 @@ public class FileHandler {
         }
     }
 
-    public List<String> retrievingContents() throws IOException {
+    public List<String> retrievingContacts() throws IOException {
         Path path = Paths.get(this.directory, this.filename);
         this.contents = Files.readAllLines(path);
         return contents;
     }
 
-    public void writingContents() throws IOException {
+    public void writingContacts(List<String> addContact) throws IOException {
         Path path = Paths.get(this.directory, this.filename);
-        Files.write(path, this.contents, StandardOpenOption.APPEND);
+        Files.write(path, addContact, StandardOpenOption.APPEND);
     }
 
 }
