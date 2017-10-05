@@ -13,11 +13,12 @@ public class FileHandler {
     private String directory;
     private String filename;
     private List<String> contents;
+    private List<String> newList;
 
    public FileHandler (String directory, String filename) {
        this.directory = directory;
        this.filename = filename;
-       this.contents = new ArrayList<>();
+       this.contents = retrievingContacts(); //new ArrayList<>();
    }
 
     public void createFile() throws IOException {
@@ -34,17 +35,33 @@ public class FileHandler {
         }
     }
 
-    public List<String> retrievingContacts() throws IOException {
+    public List<String> retrievingContacts() {
         Path path = Paths.get(this.directory, this.filename);
-        this.contents = Files.readAllLines(path);
-        return contents;
+        try {
+            newList = Files.readAllLines(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.contents = newList;
+        return newList;
     }
 
-    public void writingContacts(List<String> addContact) throws IOException {
+    public void writingContacts() {
         Path path = Paths.get(this.directory, this.filename);
-        Files.write(path, addContact, StandardOpenOption.APPEND);
+        try {
+            Files.write(path, contents);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void remove(int index) {
+        contents.remove(index);
+    }
+
+    public void addContact(String contact) {
+        contents.add(contact);
+    }
 }
 
 
