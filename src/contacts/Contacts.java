@@ -69,15 +69,20 @@ public class Contacts {
             case 3:
                 // WE NEED TO SPLIT THE CONTACT INTO A STRING ARRAY
 
-                System.out.println("Search a contact by name");
                 System.out.println("Ok, what is the name of the contact you would like to see? ");
                 String whichOne = input.getString();
+                //FLAG VARIABLE, PURPOSE IS TO SHOW IF SOMETHING HAPPENED OR NOT
+                boolean found = false;
                 try {
                     for (String string : fh.retrievingContacts()) {
                         String[] contactParts = string.split(",");
                         if (contactParts[0].equalsIgnoreCase(whichOne)) {
                             System.out.println(contactParts[0] + " | " + contactParts[1]);
+                            found = true;
                         }
+                    }
+                    if (!found) {
+                        System.out.println("That name is not in your contacts!");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -85,6 +90,7 @@ public class Contacts {
                 break;
             case 4:
                 System.out.println("Delete an existing contact");
+
                 break;
             case 5:
                 System.out.println("Exit");
