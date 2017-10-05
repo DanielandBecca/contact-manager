@@ -16,8 +16,8 @@ public class Input {
         return userString;
     }
 
-    public boolean yesNo() {
-        System.out.println("Do you want to continue?");
+    public boolean yesNo(String prompt) {
+        System.out.println(prompt);
         String userInput = this.scanner.nextLine();
         return userInput.equalsIgnoreCase("y") || userInput.equalsIgnoreCase("yes");
     }

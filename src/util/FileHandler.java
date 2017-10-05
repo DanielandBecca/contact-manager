@@ -46,9 +46,13 @@ public class FileHandler {
         return newList;
     }
 
-    public void writingContacts() throws IOException {
+    public void writingContacts() {
         Path path = Paths.get(this.directory, this.filename);
-        Files.write(path, contents);
+        try {
+            Files.write(path, contents);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void remove(int index) {
