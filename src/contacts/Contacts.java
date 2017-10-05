@@ -43,13 +43,7 @@ public class Contacts {
         switch (userInput) {
             case 1:
 //                were iterating through our list(list is pulled from fh.retrievingContacts) and printing each individual list object
-                try {
-                    for (String string : fh.retrievingContacts()) {
-                        System.out.println(string);
-                    }
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+                showContacts();
                 break;
             case 2:
                 System.out.println("Ok, please enter the name of your contact: ");
@@ -58,9 +52,10 @@ public class Contacts {
                 String contactNumber = input.getString();
 
                 String contact = (contactName + ", " + contactNumber);
-                List<String> addContact = Arrays.asList(contact);
+                fh.addContact(contact);
+                //List<String> addContact = Arrays.asList(contact);
                 try {
-                    fh.writingContacts(addContact);
+                    fh.writingContacts();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -73,30 +68,49 @@ public class Contacts {
                 String whichOne = input.getString();
                 //FLAG VARIABLE, PURPOSE IS TO SHOW IF SOMETHING HAPPENED OR NOT
                 boolean found = false;
-                try {
-                    for (String string : fh.retrievingContacts()) {
-                        String[] contactParts = string.split(",");
-                        if (contactParts[0].equalsIgnoreCase(whichOne)) {
-                            System.out.println(contactParts[0] + " | " + contactParts[1]);
-                            found = true;
-                        }
+                for (String string : fh.retrievingContacts()) {
+                    String[] contactParts = string.split(",");
+                    if (contactParts[0].equalsIgnoreCase(whichOne)) {
+                        System.out.println(contactParts[0] + " | " + contactParts[1]);
+                        found = true;
                     }
-                    if (!found) {
-                        System.out.println("That name is not in your contacts!");
+                }
+                if (!found) {
+                    System.out.println("That name is not in your contacts!");
+                }
+                break;
+            case 4:
+                showContacts();
+                System.out.println("Which one of your contacts would you like to delete?");
+                String delete = input.getString();
+                try {
+                    List<String> contactFile = fh.retrievingContacts();
+                    for (int i = 0; i < contactFile.size(); i++) {
+                        String[] contactParts = contactFile.get(i).split(",");
+                        if (contactParts[0].equalsIgnoreCase(delete)) {
+                           fh.remove(i);
+                            fh.writingContacts();
+                            System.out.println("Your contact list has been updated");
+
+                        } else {
+                            System.out.println("whoopsie, contact not found");
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                break;
-            case 4:
-                System.out.println("Delete an existing contact");
-
                 break;
             case 5:
                 System.out.println("Exit");
                 break;
         }
 
+    }
+
+    public static void showContacts () {
+        for (String string : fh.retrievingContacts()) {
+            System.out.println(string);
+        }
     }
 
 
