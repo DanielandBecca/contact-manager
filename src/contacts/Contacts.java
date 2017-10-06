@@ -1,11 +1,8 @@
 package contacts;
 
 import util.FileHandler;
-
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-
 import util.Input;
 
 public class Contacts {
@@ -40,8 +37,6 @@ public class Contacts {
     public static void userOption() {
 
         int userInput = input.getInt();
-//        scanner.nextLine();
-//        System.out.println();
 
         switch (userInput) {
             case 1:
@@ -60,7 +55,6 @@ public class Contacts {
                 break;
             case 5:
                 System.out.println("Thank you, come again!");
-//                fh.writingContacts();
                 System.exit(0);
                 break;
         }
@@ -91,7 +85,6 @@ public class Contacts {
             if (phoneNumber == 10 || phoneNumber == 7) {
                 String contact = (contactName + ", " + contactNumber);
                 fh.addContact(contact);
-                //List<String> addContact = Arrays.asList(contact);
                 fh.writingContacts();
                 System.out.println("Contact has been added!");
             } else {
@@ -170,9 +163,6 @@ public class Contacts {
                 System.out.println(("contact " + name + " already exists. "));
                 if(input.yesNo("Would you like to overwrite? (y/n)" )){
                     fh.remove(i);
-                    //addNewContact();
-                    //fh.addContact(name);
-                    //fh.writingContacts();
                 }
             }
     }
