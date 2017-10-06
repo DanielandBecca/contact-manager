@@ -68,14 +68,17 @@ public class Contacts {
     }
 
     public static void showContacts() {
-        System.out.println("Name | Phone Number");
-        System.out.println("--------------------");
+        String leftAlignFormat = "| %-8s | %-16s|%n";
+        System.out.format("+----------------------------+%n");
+        System.out.format(leftAlignFormat, "Name", "Phone Number");
+        System.out.format("+----------------------------+%n");
         for (String string : fh.retrievingContacts()) {
-//            System.out.println(string);
             String[] contact = string.split(",");
-            System.out.println(contact[0] + " | " + formatContacts(contact[1]));
+            System.out.format(leftAlignFormat, contact[0], formatContacts(contact[1]));
         }
+        System.out.format("+----------------------------+%n");
     }
+
 
     public static void addNewContact() {
         do {
