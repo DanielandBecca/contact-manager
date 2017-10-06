@@ -84,6 +84,7 @@ public class Contacts {
         do {
             System.out.println("Ok, please enter the name of your contact: ");
             String contactName = input.getString();
+            checkContacts(contactName);
             System.out.println("Please enter the contact's number: ");
             String contactNumber = input.getString();
             int phoneNumber = contactNumber.trim().length();
@@ -160,6 +161,21 @@ public class Contacts {
             return "nope!";
         }
     }
-}
+
+    public static void checkContacts(String name){
+        List<String> contacts = fh.retrievingContacts();
+        for (int i = 0; i < contacts.size(); i++) {
+            String[] contact = contacts.get(i).split(",");
+            if(contact[0].equalsIgnoreCase(name)){
+                System.out.println(("contact " + name + " already exists. "));
+                if(input.yesNo("Would you like to overwrite? (y/n)" )){
+                    fh.remove(i);
+                    //addNewContact();
+                    //fh.addContact(name);
+                    //fh.writingContacts();
+                }
+            }
+    }
+}}
 
 
