@@ -56,7 +56,7 @@ public class Contacts {
                 searchContact();
                 break;
             case 4:
-               deleteContact();
+                deleteContact();
                 break;
             case 5:
                 System.out.println("Thank you, come again!");
@@ -68,27 +68,40 @@ public class Contacts {
     }
 
     public static void showContacts() {
+        System.out.println("Name | Phone Number");
+        System.out.println("--------------------");
         for (String string : fh.retrievingContacts()) {
-            System.out.println(string);
+//            System.out.println(string);
+            String[] contact = string.split(",");
+            System.out.println(contact[0] + " | " + formatContacts(contact[1]));
         }
     }
 
-    public static void addNewContact () {
+    public static void addNewContact() {
         do {
             System.out.println("Ok, please enter the name of your contact: ");
             String contactName = input.getString();
             System.out.println("Please enter the contact's number: ");
             String contactNumber = input.getString();
-
-            String contact = (contactName + ", " + contactNumber);
-            fh.addContact(contact);
-            //List<String> addContact = Arrays.asList(contact);
-            fh.writingContacts();
-            System.out.println("Contact has been added!");
-        } while (input.yesNo("Do you want to add another contact? (y/n)"));
+            int phoneNumber = contactNumber.trim().length();
+            if (phoneNumber == 10 || phoneNumber == 7) {
+                String contact = (contactName + ", " + contactNumber);
+                fh.addContact(contact);
+                //List<String> addContact = Arrays.asList(contact);
+                fh.writingContacts();
+                System.out.println("Contact has been added!");
+            } else {
+                System.out.println("Please enter a 7 or 10 digit phone number, k thaaanks :)");
+                String newNumber = input.getString().trim();
+                contactNumber = newNumber;
+                fh.addContact(contactName + ", " + contactNumber);
+                fh.writingContacts();
+            }
+        }
+        while (input.yesNo("Do you want to add another contact? (y/n)"));
     }
 
-    public static void searchContact () {
+    public static void searchContact() {
         do {
             System.out.println("Ok, what is the name of the contact you would like to see? ");
             String whichOne = input.getString();
@@ -107,7 +120,7 @@ public class Contacts {
         } while (input.yesNo("Do you want to search for another contact? (y/n)"));
     }
 
-    public static void deleteContact () {
+    public static void deleteContact() {
         do {
             showContacts();
             System.out.println("Please enter the name of the contact you would like to delete?");
@@ -127,5 +140,23 @@ public class Contacts {
         } while (input.yesNo("Would you like to delete another contact?"));
     }
 
-
+    public static String formatContacts(String number) {
+        int size = number.trim().length();
+        if (size == 10) {
+            String first = number.trim().substring(0, 3);
+            String second = number.trim().substring(3, 6);
+            String third = number.trim().substring(6, 10);
+            String full = ("(" + first + ") " + second + "-" + third);
+            return full;
+        } else if (size == 7) {
+            String first = number.trim().substring(0, 3);
+            String second = number.trim().substring(3, 7);
+            String full = (first + "-" + second);
+            return full;
+        } else {
+            return "nope!";
+        }
+    }
 }
+
+
